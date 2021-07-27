@@ -18,7 +18,7 @@ include(CheckIncludeFiles)
 include(CheckSymbolExists)
 include(FeatureSummary)
 
-find_package(Qt5 COMPONENTS Core DBus Widgets X11Extras Quick REQUIRED)
+find_package(Qt5 COMPONENTS Core DBus Widgets X11Extras Quick LinguistTools REQUIRED)
 find_package(X11)
 
 # ----------- Check --------------------
@@ -64,3 +64,28 @@ add_subdirectory(screenlocker)
 add_subdirectory(checkpass)
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
+
+
+# Get the installation directory from qmake
+get_target_property(QT_QMAKE_EXECUTABLE ${Qt5Core_QMAKE_EXECUTABLE} IMPORTED_LOCATION)
+if(NOT QT_QMAKE_EXECUTABLE)
+    message(FATAL_ERROR "qmake is not found.")
+endif()
+
+execute_process(COMMAND ${QT_QMAKE_EXECUTABLE} -query QT_INSTALL_QML
+    OUTPUT_VARIABLE INSTALL_QMLDIR
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+if(INSTALL_QMLDIR)
+    message(STATUS "qml directory:" "${INSTALL_QMLDIR}")
+else()
+    message(FATAL_ERROR "qml directory cannot be detected.")
+endif()
+
+# Install translations
+file(GLOB TS_FILES translations/*.ts)
+qt5_create_translation(QM_FILES ${TS_FILES})
+add_custom_target(translations DEPENDS ${QM_FILES} SOURCES ${TS_FILES})
+add_dependencies(cutefish-screenlocker translations)
+install(FILES ${QM_FILES} DESTINATION /usr/share/cutefish-screenlocker/translations)
+
