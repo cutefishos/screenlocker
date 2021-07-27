@@ -24,6 +24,7 @@ import QtQuick.Layouts 1.12
 import QtGraphicalEffects 1.0
 
 import Cutefish.Accounts 1.0 as Accounts
+import Cutefish.System 1.0 as System
 import FishUI 1.0 as FishUI
 
 Item {
@@ -33,6 +34,10 @@ Item {
 
     LayoutMirroring.enabled: Qt.locale().textDirection === Qt.RightToLeft
     LayoutMirroring.childrenInherit: true
+
+    System.Wallpaper {
+        id: wallpaper
+    }
 
     Image {
         id: wallpaperImage
@@ -158,7 +163,7 @@ Item {
             id: _mainLayout
             anchors.fill: parent
             anchors.margins: FishUI.Units.largeSpacing * 1.5
-            spacing: FishUI.Units.smallSpacing
+            spacing: FishUI.Units.smallSpacing * 1.5
 
             Image {
                 id: userIcon
@@ -267,6 +272,20 @@ Item {
         }
 
         opacity: text == "" ? 0 : 1
+    }
+
+    DropShadow {
+        anchors.fill: message
+        source: message
+        z: -1
+        horizontalOffset: 1
+        verticalOffset: 1
+        radius: 10
+        samples: radius * 4
+        spread: 0.35
+        color: Qt.rgba(0, 0, 0, 0.8)
+        opacity: 0.1
+        visible: true
     }
 
     function tryUnlock() {

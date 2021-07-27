@@ -6,7 +6,6 @@ set(PROJECT_SOURCES
     main.cpp
     application.cpp
     authenticator.cpp
-    wallpaper.cpp
     kcheckpass-enums.h
     fixx11h.h
     qml.qrc

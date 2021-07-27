@@ -1,5 +1,4 @@
 #include "application.h"
-#include "wallpaper.h"
 
 // Qt Core
 #include <QAbstractNativeEventFilter>
@@ -101,7 +100,6 @@ void Application::desktopResized()
         // engine stuff
         QQmlContext *context = view->engine()->rootContext();
         context->setContextProperty(QStringLiteral("authenticator"), m_authenticator);
-        context->setContextProperty(QStringLiteral("wallpaper"), new Wallpaper);
 
         view->setSource(QUrl("qrc:/qml/LockScreen.qml"));
         view->setResizeMode(QQuickView::SizeRootObjectToView);
