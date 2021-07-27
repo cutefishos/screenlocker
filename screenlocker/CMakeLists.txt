@@ -12,11 +12,11 @@ set(PROJECT_SOURCES
     qml.qrc
 )
 
-add_executable(screenlocker
+add_executable(cutefish-screenlocker
     ${PROJECT_SOURCES}
 )
 
-target_link_libraries(screenlocker
+target_link_libraries(cutefish-screenlocker
     PRIVATE
     Qt5::Core
     Qt5::DBus
@@ -26,3 +26,5 @@ target_link_libraries(screenlocker
 
     ${X11_LIBRARIES}
 )
+
+install(TARGETS cutefish-screenlocker RUNTIME DESTINATION /usr/bin)

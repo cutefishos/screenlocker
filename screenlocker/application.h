@@ -38,7 +38,7 @@ private:
     QList<QQuickView *> m_views;
 
     org_kde_ksld *m_ksldInterface = nullptr;
-    bool m_testing = true;
+    bool m_testing = false;
 };
 
 #endif // APPLICATION_H

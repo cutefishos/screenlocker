@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/LockScreen.qml</file>
-        <file>qml/Greeter.qml</file>
     </qresource>
 </RCC>
