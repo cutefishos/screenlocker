@@ -172,7 +172,7 @@ Item {
 
                 Layout.preferredHeight: iconSize
                 Layout.preferredWidth: iconSize
-                sourceSize: Qt.size(iconSize, iconSize)
+                sourceSize: source === "image://icontheme/default-user" ? Qt.size(iconSize, iconSize) : undefined
                 source: currentUser.iconFileName ? "file:///" + currentUser.iconFileName : "image://icontheme/default-user"
                 Layout.alignment: Qt.AlignHCenter
 
