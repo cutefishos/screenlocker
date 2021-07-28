@@ -210,7 +210,7 @@ Item {
                 echoMode: TextInput.Password
 
                 background: Rectangle {
-                    color: FishUI.Theme.darkMode ? "#7B7B7B" : "white"
+                    color: FishUI.Theme.darkMode ? "#B6B6B6" : "white"
                     radius: FishUI.Theme.bigRadius
                     opacity: 0.5
                 }
@@ -248,7 +248,7 @@ Item {
 //                }
 
                 background: Rectangle {
-                    color: FishUI.Theme.darkMode ? "#7B7B7B" : "white"
+                    color: FishUI.Theme.darkMode ? "#B6B6B6" : "white"
                     opacity: unlockBtn.pressed ? 0.3 : unlockBtn.hovered ? 0.4 : 0.5
                     radius: FishUI.Theme.bigRadius
                 }
