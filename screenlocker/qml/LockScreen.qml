@@ -55,10 +55,19 @@ Item {
     FastBlur {
         id: wallpaperBlur
         anchors.fill: parent
-        radius: 64
+        radius: 0
         source: wallpaperImage
         cached: true
         visible: true
+    }
+
+    NumberAnimation {
+        id: blurAni
+        target: wallpaperBlur
+        property: "radius"
+        duration: 300
+        from: 10
+        to: 64
     }
 
     Accounts.UserAccount {
@@ -79,6 +88,8 @@ Item {
     Component.onCompleted: {
         timeLabel.updateInfo()
         dateLabel.updateInfo()
+
+        blurAni.start()
     }
 
     Item {
