@@ -30,7 +30,7 @@ import FishUI 1.0 as FishUI
 Item {
     id: root
 
-    property alias notification: message.text
+    property string notification
 
     LayoutMirroring.enabled: Qt.locale().textDirection === Qt.RightToLeft
     LayoutMirroring.childrenInherit: true
@@ -269,12 +269,12 @@ Item {
 
     Label {
         id: message
-        text: ""
         anchors.top: _mainItem.bottom
         anchors.topMargin: FishUI.Units.largeSpacing
         anchors.horizontalCenter: parent.horizontalCenter
         font.bold: true
         color: "white"
+        text: root.notification
 
         Behavior on opacity {
             NumberAnimation {
@@ -301,6 +301,7 @@ Item {
 
     function tryUnlock() {
         if (!password.text) {
+            notificationResetTimer.start()
             root.notification = qsTr("Please enter your password")
             return
         }
@@ -308,25 +309,34 @@ Item {
         authenticator.tryUnlock(password.text)
     }
 
+    Timer {
+        id: notificationResetTimer
+        interval: 3000
+        onTriggered: root.notification = ""
+    }
+
     Connections {
         target: authenticator
         function onFailed() {
+            notificationResetTimer.start()
             root.notification = qsTr("Unlocking failed")
         }
 
-        function onGraceLockedChanged() {
-            if (!authenticator.graceLocked) {
-                root.notification = ""
-                password.selectAll()
-                password.focus = true
-            }
-        }
+//        function onGraceLockedChanged() {
+//            if (!authenticator.graceLocked) {
+//                root.notification = ""
+//                password.selectAll()
+//                password.focus = true
+//            }
+//        }
 
         function onMessage(text) {
+            notificationResetTimer.start()
             root.notification = text
         }
 
         function onError(text) {
+            notificationResetTimer.start()
             root.notification = text
         }
     }
