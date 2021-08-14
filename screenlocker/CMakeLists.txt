@@ -26,4 +26,4 @@ target_link_libraries(cutefish-screenlocker
     ${X11_LIBRARIES}
 )
 
-install(TARGETS cutefish-screenlocker RUNTIME DESTINATION /usr/bin)
+install(TARGETS cutefish-screenlocker RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
