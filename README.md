@@ -17,7 +17,7 @@ sudo apt install libpam0g-dev libx11-dev -y
 ```shell
 mkdir build
 cd build
-cmake ..
+cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
 make
 ```
 
