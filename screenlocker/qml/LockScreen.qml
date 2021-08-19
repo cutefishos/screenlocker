@@ -216,6 +216,8 @@ Item {
                 Layout.preferredHeight: 40
                 Layout.preferredWidth: 260
                 placeholderText: qsTr("Password")
+                leftPadding: FishUI.Units.largeSpacing
+                rightPadding: FishUI.Units.largeSpacing
                 focus: true
 
                 echoMode: TextInput.Password
