@@ -6,22 +6,22 @@
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="202"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Hasło</translation>
     </message>
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="225"/>
         <source>Unlock</source>
-        <translation type="unfinished"></translation>
+        <translation>Odblokuj</translation>
     </message>
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="274"/>
         <source>Please enter your password</source>
-        <translation type="unfinished"></translation>
+        <translation>Proszę wprowadzić hasło</translation>
     </message>
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="284"/>
         <source>Unlocking failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Odblokowanie nieudane</translation>
     </message>
 </context>
 </TS>
