@@ -10,6 +10,7 @@ Build-Depends: cmake,
                qtquickcontrols2-5-dev,
                qttools5-dev,
                qttools5-dev-tools,
+               libqt5x11extras5-dev,
                libpam0g-dev,
                libx11-dev
 Standards-Version: 4.5.0
