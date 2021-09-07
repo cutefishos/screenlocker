@@ -16,7 +16,7 @@
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="274"/>
         <source>Please enter your password</source>
-        <translation>يُرجى إدخال كلمة مرورك</translation>
+        <translation>يُرجى إدخال كلمة المرور</translation>
     </message>
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="284"/>
