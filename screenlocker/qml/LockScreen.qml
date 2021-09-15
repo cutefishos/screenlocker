@@ -218,6 +218,7 @@ Item {
                 placeholderText: qsTr("Password")
                 leftPadding: FishUI.Units.largeSpacing
                 rightPadding: FishUI.Units.largeSpacing
+                enabled: !authenticator.graceLocked
                 focus: true
 
                 echoMode: TextInput.Password
@@ -242,6 +243,7 @@ Item {
                 Layout.preferredWidth: 260
                 text: qsTr("Unlock")
                 onClicked: root.tryUnlock()
+                enabled: !authenticator.graceLocked
 
                 scale: unlockBtn.pressed ? 0.95 : 1.0
 
@@ -319,18 +321,19 @@ Item {
 
     Connections {
         target: authenticator
+
         function onFailed() {
             notificationResetTimer.start()
             root.notification = qsTr("Unlocking failed")
         }
 
-//        function onGraceLockedChanged() {
-//            if (!authenticator.graceLocked) {
-//                root.notification = ""
-//                password.selectAll()
-//                password.focus = true
-//            }
-//        }
+        function onGraceLockedChanged() {
+            if (!authenticator.graceLocked) {
+                root.notification = ""
+                password.selectAll()
+                password.focus = true
+            }
+        }
 
         function onMessage(text) {
             notificationResetTimer.start()

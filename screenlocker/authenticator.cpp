@@ -44,7 +44,7 @@ Authenticator::Authenticator(AuthenticationMode mode, QObject *parent)
     , m_checkPass(nullptr)
 {
     m_graceLockTimer->setSingleShot(true);
-    m_graceLockTimer->setInterval(3000);
+    m_graceLockTimer->setInterval(1500);
     connect(m_graceLockTimer, &QTimer::timeout, this, &Authenticator::graceLockedChanged);
 
     if (mode == AuthenticationMode::Delayed) {
