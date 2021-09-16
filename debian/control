@@ -1,7 +1,7 @@
 Source: cutefish-screenlocker
 Section: devel
 Priority: optional
-Maintainer: CutefishOS <cutefishos@foxmail.com>
+Maintainer: CutefishOS <support@cutefishos.com>
 Build-Depends: cmake,
                debhelper (>= 9),
                extra-cmake-modules,
@@ -14,7 +14,7 @@ Build-Depends: cmake,
                libpam0g-dev,
                libx11-dev
 Standards-Version: 4.5.0
-Homepage: https://github.com/cutefishos/screenlocker
+Homepage: https://cutefishos.com
 
 Package: cutefish-screenlocker
 Architecture: any
