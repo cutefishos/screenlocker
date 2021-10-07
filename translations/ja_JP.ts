@@ -6,17 +6,17 @@
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="202"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>パスワード</translation>
     </message>
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="225"/>
         <source>Unlock</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ロックを解除</translation>
     </message>
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="274"/>
         <source>Please enter your password</source>
-        <translation type="unfinished"></translation>
+        <translation>パスワードを入力してください</translation>
     </message>
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="284"/>
