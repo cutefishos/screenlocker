@@ -100,8 +100,21 @@ Item {
         anchors.bottom: _mainItem.top
         anchors.bottomMargin: root.height * 0.1
 
+//        Image {
+//            id: icon
+//            anchors.horizontalCenter: parent.horizontalCenter
+//            anchors.verticalCenter: parent.verticalCenter
+//            Layout.alignment: Qt.AlignHCenter
+//            width: 32
+//            height: 32
+//            sourceSize: Qt.size(width, height)
+//            source: "qrc:/images/system-lock-screen-symbolic.svg"
+//        }
+
         Label {
             id: timeLabel
+//            anchors.top: icon.bottom
+//            anchors.topMargin: FishUI.Units.largeSpacing
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             Layout.alignment: Qt.AlignHCenter
@@ -213,11 +226,11 @@ Item {
             TextField {
                 id: password
                 Layout.alignment: Qt.AlignHCenter
-                Layout.preferredHeight: 40
-                Layout.preferredWidth: 260
+                Layout.preferredHeight: 36
+                Layout.fillWidth: true
                 placeholderText: qsTr("Password")
                 leftPadding: FishUI.Units.largeSpacing
-                rightPadding: FishUI.Units.largeSpacing
+                rightPadding: 36 + FishUI.Units.largeSpacing //FishUI.Units.largeSpacing
                 enabled: !authenticator.graceLocked
                 focus: true
 
@@ -225,48 +238,44 @@ Item {
 
                 background: Rectangle {
                     color: FishUI.Theme.darkMode ? "#B6B6B6" : "white"
-                    radius: FishUI.Theme.bigRadius
+                    // radius: FishUI.Theme.bigRadius
                     opacity: 0.5
                 }
 
                 Keys.onEnterPressed: root.tryUnlock()
                 Keys.onReturnPressed: root.tryUnlock()
                 Keys.onEscapePressed: password.text = ""
-            }
 
-            Button {
-                id: unlockBtn
-                hoverEnabled: true
-                focusPolicy: Qt.NoFocus
-                Layout.alignment: Qt.AlignHCenter
-                Layout.preferredHeight: 40
-                Layout.preferredWidth: 260
-                text: qsTr("Unlock")
-                onClicked: root.tryUnlock()
-                enabled: !authenticator.graceLocked
+                LoginButton {
+                    anchors.right: password.right
+                    anchors.top: password.top
+                    anchors.bottom: password.bottom
+                    source: "qrc:/images/screensaver-unlock-symbolic.svg"
+                    iconMargins: 10
+                    Layout.alignment: Qt.AlignHCenter
+                    enabled: !authenticator.graceLocked
+                    onClicked: root.tryUnlock()
+                    size: 36
+                    Layout.preferredHeight: 36
+                    Layout.preferredWidth: 36
+                }
 
-                scale: unlockBtn.pressed ? 0.95 : 1.0
+                layer.enabled: true
+                layer.effect: OpacityMask {
+                    maskSource: Item {
+                        width: password.width
+                        height: password.height
 
-                Behavior on scale {
-                    NumberAnimation {
-                        duration: 100
+                        Rectangle {
+                            anchors.fill: parent
+                            radius: FishUI.Theme.mediumRadius
+                        }
                     }
                 }
+            }
 
-//                contentItem: Text {
-//                    text: unlockBtn.text
-//                    font: unlockBtn.font
-//                    horizontalAlignment: Text.AlignHCenter
-//                    verticalAlignment: Text.AlignVCenter
-//                    elide: Text.ElideRight
-//                    color: "#1C1C1C"
-//                }
-
-                background: Rectangle {
-                    color: FishUI.Theme.darkMode ? "#B6B6B6" : "white"
-                    opacity: unlockBtn.pressed ? 0.3 : unlockBtn.hovered ? 0.4 : 0.5
-                    radius: FishUI.Theme.bigRadius
-                }
+            Item {
+                height: 1
             }
         }
     }
@@ -299,7 +308,7 @@ Item {
         samples: radius * 4
         spread: 0.35
         color: Qt.rgba(0, 0, 0, 0.8)
-        opacity: 0.1
+        opacity: 0.3
         visible: true
     }
 

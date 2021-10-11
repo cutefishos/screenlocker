@@ -22,6 +22,8 @@
 
 #include <QGuiApplication>
 #include <QQuickView>
+
+#include <QVariantAnimation>
 #include "authenticator.h"
 
 class Application : public QGuiApplication
@@ -39,6 +41,7 @@ public slots:
     void onScreenAdded(QScreen *screen);
 
 private slots:
+    void onSucceeded();
     void getFocus();
     void markViewsAsVisible(QQuickView *view);
 

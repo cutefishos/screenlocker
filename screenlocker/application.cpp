@@ -66,7 +66,7 @@ Application::Application(int &argc, char **argv)
     , m_authenticator(new Authenticator(AuthenticationMode::Direct, this))
 {
     // It's a queued connection to give the QML part time to eventually execute code connected to Authenticator::succeeded if any
-    connect(m_authenticator, &Authenticator::succeeded, this, &QCoreApplication::quit, Qt::QueuedConnection);
+    connect(m_authenticator, &Authenticator::succeeded, this, &Application::onSucceeded, Qt::QueuedConnection);
 
     installEventFilter(this);
 
@@ -174,6 +174,39 @@ void Application::onScreenAdded(QScreen *screen)
     });
 
     desktopResized();
+}
+
+void Application::onSucceeded()
+{
+    QQuickView *mainView = nullptr;
+
+    // 寻找主屏幕的 view
+    for (int i = 0; i < m_views.size(); ++i) {
+        if (m_views.at(i)->screen() == QGuiApplication::primaryScreen()) {
+            mainView = m_views.at(i);
+            break;
+        }
+    }
+
+    if (mainView) {
+        QVariantAnimation *ani = new QVariantAnimation;
+
+        connect(ani, &QVariantAnimation::valueChanged, [mainView] (const QVariant &value) {
+            mainView->setY(value.toInt());
+        });
+
+        connect(ani, &QVariantAnimation::finished, this, [=] {
+            QCoreApplication::exit();
+        });
+
+        ani->setDuration(500);
+        ani->setEasingCurve(QEasingCurve::OutSine);
+        ani->setStartValue(mainView->geometry().y());
+        ani->setEndValue(mainView->geometry().y() + -mainView->geometry().height());
+        ani->start();
+    } else {
+        QCoreApplication::exit();
+    }
 }
 
 void Application::getFocus()
