@@ -171,7 +171,7 @@ Item {
     Item {
         id: _mainItem
         anchors.centerIn: parent
-        width: 260 + FishUI.Units.largeSpacing * 3
+        width: 280 + FishUI.Units.largeSpacing * 3
         height: _mainLayout.implicitHeight + FishUI.Units.largeSpacing * 4
 
         Layout.alignment: Qt.AlignHCenter
@@ -310,6 +310,21 @@ Item {
         color: Qt.rgba(0, 0, 0, 0.8)
         opacity: 0.3
         visible: true
+    }
+
+    Item {
+        // anchors.top: message.bottom
+        // anchors.topMargin: FishUI.Units.largeSpacing
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: root.height * 0.05 //FishUI.Units.largeSpacing
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        width: 280 + FishUI.Units.largeSpacing * 3
+        height: 70
+
+        MprisItem {
+            anchors.fill: parent
+        }
     }
 
     function tryUnlock() {
