@@ -21,6 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define AUTHENTICATOR_H
 
 #include <QObject>
+#include "pamauthentication.h"
 
 class QSocketNotifier;
 class QTimer;
@@ -55,6 +56,8 @@ private:
     void setupCheckPass();
     QTimer *m_graceLockTimer;
     KCheckPass *m_checkPass;
+    PamAuthentication *m_pamAuth;
+
 };
 
 class KCheckPass : public QObject
@@ -106,6 +109,7 @@ private:
     int m_fd;
     bool m_ready = false;
     AuthenticationMode m_mode;
+
 };
 
 #endif

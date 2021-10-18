@@ -122,6 +122,7 @@ static struct pam_conv PAM_conversation = {
 #ifdef PAM_FAIL_DELAY
 static void fail_delay(int retval ATTR_UNUSED, unsigned usec_delay ATTR_UNUSED, void *appdata_ptr ATTR_UNUSED)
 {
+
 }
 #endif
 
@@ -134,70 +135,94 @@ AuthReturn Authenticate(const char *method, const char *user, char *(*conv)(Conv
     char pservb[64];
     int pam_error;
 
-    openlog("kcheckpass", LOG_PID, LOG_AUTH);
+    int ret;
 
-    PAM_data.conv = conv;
-    if (strcmp(method, "classic")) {
-        sprintf(pservb, "%.31s-%.31s", KSCREENSAVER_PAM_SERVICE, method);
-        pam_service = pservb;
-    } else {
-        /* PAM_data.classic = 1; */
-        pam_service = KSCREENSAVER_PAM_SERVICE;
-    }
-    pam_error = pam_start(pam_service, user, &PAM_conversation, &pamh);
-    if (pam_error != PAM_SUCCESS) {
+    ret = pam_start("cutefish", user, &PAM_conversation, &pamh);
+
+    message("%d hello", ret);
+
+    if (ret != PAM_SUCCESS) {
+        message("PAM started failed\n");
         return AuthError;
     }
 
-    tty = ttyname(0);
-    if (!tty) {
-        tty = getenv("DISPLAY");
-    }
-
-    pam_error = pam_set_item(pamh, PAM_TTY, tty);
-    if (pam_error != PAM_SUCCESS) {
-        pam_end(pamh, pam_error);
+    int auth_status = pam_authenticate(pamh, 0);
+    if (auth_status != PAM_SUCCESS) {
+        message("Auth Status: %s\n", pam_strerror(pamh, auth_status));
         return AuthError;
     }
 
-#ifdef PAM_FAIL_DELAY
-    pam_set_item(pamh, PAM_FAIL_DELAY, (void *)fail_delay);
-#endif
-
-    pam_error = pam_authenticate(pamh, 0);
-    if (pam_error != PAM_SUCCESS) {
-        if (PAM_data.abort) {
-            PAM_data.abort = 0;
-            pam_end(pamh, pam_error);
-            return AuthAbort;
-        }
-        pam_end(pamh, pam_error);
-        switch (pam_error) {
-        case PAM_USER_UNKNOWN:
-        case PAM_AUTH_ERR:
-        case PAM_MAXTRIES: /* should handle this better ... */
-        case PAM_AUTHINFO_UNAVAIL: /* returned for unknown users ... bogus */
-            return AuthBad;
-        default:
-            return AuthError;
-        }
-    }
-
-    /* just in case some module is stupid enough to ignore a preset PAM_USER */
-    pam_error = pam_get_item(pamh, PAM_USER, &pam_item);
-    if (pam_error != PAM_SUCCESS) {
-        pam_end(pamh, pam_error);
+    if (pam_end(pamh, ret) != PAM_SUCCESS) {
+        message("Failed to terminate PAM\n");
         return AuthError;
     }
-    if (strcmp((const char *)pam_item, user)) {
-        pam_end(pamh, PAM_SUCCESS); /* maybe use PAM_AUTH_ERR? */
-        return AuthBad;
-    }
 
-    pam_error = pam_setcred(pamh, PAM_REFRESH_CRED);
-    /* ignore errors on refresh credentials. If this did not work we use the old ones. */
 
-    pam_end(pamh, PAM_SUCCESS);
+
+//    openlog("kcheckpass", LOG_PID, LOG_AUTH);
+
+//    PAM_data.conv = conv;
+//    if (strcmp(method, "classic")) {
+//        sprintf(pservb, "%.31s-%.31s", KSCREENSAVER_PAM_SERVICE, method);
+//        pam_service = pservb;
+//    } else {
+//        /* PAM_data.classic = 1; */
+//        pam_service = KSCREENSAVER_PAM_SERVICE;
+//    }
+//    pam_error = pam_start(pam_service, user, &PAM_conversation, &pamh);
+//    if (pam_error != PAM_SUCCESS) {
+//        return AuthError;
+//    }
+
+//    tty = ttyname(0);
+//    if (!tty) {
+//        tty = getenv("DISPLAY");
+//    }
+
+//    pam_error = pam_set_item(pamh, PAM_TTY, tty);
+//    if (pam_error != PAM_SUCCESS) {
+//        pam_end(pamh, pam_error);
+//        return AuthError;
+//    }
+
+//#ifdef PAM_FAIL_DELAY
+//    pam_set_item(pamh, PAM_FAIL_DELAY, (void *)fail_delay);
+//#endif
+
+//    pam_error = pam_authenticate(pamh, 0);
+//    if (pam_error != PAM_SUCCESS) {
+//        if (PAM_data.abort) {
+//            PAM_data.abort = 0;
+//            pam_end(pamh, pam_error);
+//            return AuthAbort;
+//        }
+//        pam_end(pamh, pam_error);
+//        switch (pam_error) {
+//        case PAM_USER_UNKNOWN:
+//        case PAM_AUTH_ERR:
+//        case PAM_MAXTRIES: /* should handle this better ... */
+//        case PAM_AUTHINFO_UNAVAIL: /* returned for unknown users ... bogus */
+//            return AuthBad;
+//        default:
+//            return AuthError;
+//        }
+//    }
+
+//    /* just in case some module is stupid enough to ignore a preset PAM_USER */
+//    pam_error = pam_get_item(pamh, PAM_USER, &pam_item);
+//    if (pam_error != PAM_SUCCESS) {
+//        pam_end(pamh, pam_error);
+//        return AuthError;
+//    }
+//    if (strcmp((const char *)pam_item, user)) {
+//        pam_end(pamh, PAM_SUCCESS); /* maybe use PAM_AUTH_ERR? */
+//        return AuthBad;
+//    }
+
+//    pam_error = pam_setcred(pamh, PAM_REFRESH_CRED);
+//    /* ignore errors on refresh credentials. If this did not work we use the old ones. */
+
+//    pam_end(pamh, PAM_SUCCESS);
     return AuthOk;
 }
 

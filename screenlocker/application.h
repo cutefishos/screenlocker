@@ -25,6 +25,7 @@
 
 #include <QVariantAnimation>
 #include "authenticator.h"
+#include "pamauthentication.h"
 
 class Application : public QGuiApplication
 {
@@ -35,6 +36,8 @@ public:
     ~Application();
 
     void initialViewSetup();
+
+    Q_INVOKABLE void login(const QString &token);
 
 public slots:
     void desktopResized();
@@ -56,6 +59,8 @@ private:
 private:
     Authenticator *m_authenticator;
     QList<QQuickView *> m_views;
+
+    PamAuthentication *m_pam;
 
     bool m_testing = false;
 };

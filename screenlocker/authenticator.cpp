@@ -43,6 +43,7 @@ Authenticator::Authenticator(AuthenticationMode mode, QObject *parent)
     , m_graceLockTimer(new QTimer(this))
     , m_checkPass(nullptr)
 {
+    m_pamAuth = new PamAuthentication;
     m_graceLockTimer->setSingleShot(true);
     m_graceLockTimer->setInterval(1500);
     connect(m_graceLockTimer, &QTimer::timeout, this, &Authenticator::graceLockedChanged);

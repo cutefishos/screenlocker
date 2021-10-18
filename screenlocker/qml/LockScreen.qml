@@ -334,7 +334,9 @@ Item {
             return
         }
 
-        authenticator.tryUnlock(password.text)
+        App.login(password.text)
+
+//        authenticator.tryUnlock(password.text)
     }
 
     Timer {

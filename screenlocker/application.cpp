@@ -64,6 +64,7 @@ public:
 Application::Application(int &argc, char **argv)
     : QGuiApplication(argc, argv)
     , m_authenticator(new Authenticator(AuthenticationMode::Direct, this))
+    , m_pam(new PamAuthentication)
 {
     // It's a queued connection to give the QML part time to eventually execute code connected to Authenticator::succeeded if any
     connect(m_authenticator, &Authenticator::succeeded, this, &Application::onSucceeded, Qt::QueuedConnection);
@@ -102,6 +103,17 @@ void Application::initialViewSetup()
     desktopResized();
 }
 
+void Application::login(const QString &token)
+{
+    bool success = m_pam->verify(token);
+
+    if (success) {
+        onSucceeded();
+    } else {
+        qDebug() << "error";
+    }
+}
+
 void Application::desktopResized()
 {
     const int nScreens = screens().count();
@@ -119,6 +131,7 @@ void Application::desktopResized()
         // engine stuff
         QQmlContext *context = view->engine()->rootContext();
         context->setContextProperty(QStringLiteral("authenticator"), m_authenticator);
+        context->setContextProperty(QStringLiteral("App"), this);
 
         view->setSource(QUrl("qrc:/qml/LockScreen.qml"));
         view->setResizeMode(QQuickView::SizeRootObjectToView);
@@ -127,13 +140,13 @@ void Application::desktopResized()
         auto screen = QGuiApplication::screens()[i];
         view->setGeometry(screen->geometry());
 
-        if (!m_testing) {
-            if (QX11Info::isPlatformX11()) {
-                view->setFlags(Qt::X11BypassWindowManagerHint);
-            } else {
-                view->setFlags(Qt::FramelessWindowHint);
-            }
-        }
+//        if (!m_testing) {
+//            if (QX11Info::isPlatformX11()) {
+//                view->setFlags(Qt::X11BypassWindowManagerHint);
+//            } else {
+//                view->setFlags(Qt::FramelessWindowHint);
+//            }
+//        }
 
         // overwrite the factory set by kdeclarative
         // auto oldFactory = view->engine()->networkAccessManagerFactory();
