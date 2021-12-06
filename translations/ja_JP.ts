@@ -11,7 +11,7 @@
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="225"/>
         <source>Unlock</source>
-        <translation type="unfinished">ロックを解除</translation>
+        <translation>ロックを解除</translation>
     </message>
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="274"/>
@@ -21,7 +21,7 @@
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="284"/>
         <source>Unlocking failed</source>
-        <translation type="unfinished"></translation>
+        <translation>ロック解除を失敗</translation>
     </message>
 </context>
 </TS>
