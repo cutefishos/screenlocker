@@ -21,7 +21,7 @@
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="284"/>
         <source>Unlocking failed</source>
-        <translation>ロック解除を失敗</translation>
+        <translation>ロックの解除に失敗しました</translation>
     </message>
 </context>
 </TS>
