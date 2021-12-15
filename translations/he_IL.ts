@@ -16,7 +16,7 @@
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="274"/>
         <source>Please enter your password</source>
-        <translation type="unfinished">הזן את הסיסמא שלך</translation>
+        <translation>הקש סיסמה</translation>
     </message>
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="284"/>
