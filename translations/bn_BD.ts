@@ -6,22 +6,22 @@
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="202"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>পাসওয়ার্ড</translation>
     </message>
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="225"/>
         <source>Unlock</source>
-        <translation type="unfinished"></translation>
+        <translation>আনলক করুন</translation>
     </message>
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="274"/>
         <source>Please enter your password</source>
-        <translation type="unfinished"></translation>
+        <translation>আপনার পাসওয়ার্ড দিন</translation>
     </message>
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="284"/>
         <source>Unlocking failed</source>
-        <translation type="unfinished"></translation>
+        <translation>আনলক করা ব্যর্থ হয়েছে</translation>
     </message>
 </context>
 </TS>
