@@ -21,7 +21,7 @@
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="284"/>
         <source>Unlocking failed</source>
-        <translation>আনলক করা ব্যর্থ হয়েছে</translation>
+        <translation>আনলক করা যায়নি</translation>
     </message>
 </context>
 </TS>
