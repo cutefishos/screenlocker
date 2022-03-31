@@ -6,7 +6,7 @@
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="202"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Taguri n uzerray</translation>
     </message>
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="225"/>
