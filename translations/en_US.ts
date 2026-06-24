@@ -21,7 +21,7 @@
     <message>
         <location filename="../screenlocker/qml/LockScreen.qml" line="284"/>
         <source>Unlocking failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Unlocking failed</translation>
     </message>
 </context>
 </TS>
