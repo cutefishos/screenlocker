@@ -46,7 +46,7 @@
 class FocusOutEventFilter : public QAbstractNativeEventFilter
 {
 public:
-    bool nativeEventFilter(const QByteArray &eventType, void *message, long int *result) override {
+    bool nativeEventFilter(const QByteArray &eventType, void *message, qintptr *result) override {
         Q_UNUSED(result)
         if (qstrcmp(eventType, "xcb_generic_event_t") != 0) {
             return false;

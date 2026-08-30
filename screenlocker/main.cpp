@@ -19,6 +19,7 @@
 
 #include "application.h"
 #include <QDBusConnection>
+#include <QFile>
 #include <QTranslator>
 #include <QLocale>
 

@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/compat")
 
 # set(CMAKE_AUTOUIC ON)
 # set(CMAKE_AUTOMOC ON)
@@ -18,7 +19,7 @@ include(CheckIncludeFiles)
 include(CheckSymbolExists)
 include(FeatureSummary)
 
-find_package(Qt5 COMPONENTS Core DBus Widgets X11Extras Quick LinguistTools REQUIRED)
+find_package(Qt6 COMPONENTS Core DBus Widgets Quick LinguistTools REQUIRED)
 find_package(X11)
 
 # ----------- Check --------------------
@@ -66,13 +67,9 @@ add_subdirectory(checkpass)
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
 
-# Get the installation directory from qmake
-get_target_property(QT_QMAKE_EXECUTABLE ${Qt5Core_QMAKE_EXECUTABLE} IMPORTED_LOCATION)
-if(NOT QT_QMAKE_EXECUTABLE)
-    message(FATAL_ERROR "qmake is not found.")
-endif()
-
-execute_process(COMMAND ${QT_QMAKE_EXECUTABLE} -query QT_INSTALL_QML
+# Get the installation directory from qtpaths
+find_program(QT_PATHS_EXECUTABLE NAMES qtpaths6 REQUIRED)
+execute_process(COMMAND ${QT_PATHS_EXECUTABLE} -query QT_INSTALL_QML
     OUTPUT_VARIABLE INSTALL_QMLDIR
     OUTPUT_STRIP_TRAILING_WHITESPACE
 )
@@ -84,7 +81,7 @@ endif()
 
 # Install translations
 file(GLOB TS_FILES translations/*.ts)
-qt5_add_translation(QM_FILES ${TS_FILES})
+qt6_add_translation(QM_FILES ${TS_FILES})
 add_custom_target(translations DEPENDS ${QM_FILES} SOURCES ${TS_FILES})
 add_dependencies(cutefish-screenlocker translations)
 install(FILES ${QM_FILES} DESTINATION /usr/share/cutefish-screenlocker/translations)

@@ -1,0 +1,36 @@
+/* Qt 6 compatibility layer for the legacy QX11Info API. */
+#ifndef CUTEFISH_QX11INFO_COMPAT
+#define CUTEFISH_QX11INFO_COMPAT
+
+#include <QGuiApplication>
+#include <QtGui/qguiapplication_platform.h>
+#include <xcb/xcb.h>
+
+class QX11Info
+{
+public:
+    static bool isPlatformX11()
+    {
+        return nativeInterface() != nullptr;
+    }
+
+    static xcb_connection_t *connection()
+    {
+        const auto native = nativeInterface();
+        return native ? native->connection() : nullptr;
+    }
+
+    static Display *display()
+    {
+        const auto native = nativeInterface();
+        return native ? native->display() : nullptr;
+    }
+
+private:
+    static QNativeInterface::QX11Application *nativeInterface()
+    {
+        return qGuiApp ? qGuiApp->nativeInterface<QNativeInterface::QX11Application>() : nullptr;
+    }
+};
+
+#endif
